@@ -200,6 +200,7 @@ export default function Documentation(){
                          </div>
                     </section>
                </fieldset>
+
                <section className="grid grid-cols-2 gap-3">
                     <div>
                          <fieldset className="border rounded-lg mt-3 py-5 p-4">
@@ -362,6 +363,10 @@ export default function Documentation(){
                          </fieldset>
                     </div>
                </section>
+
+               <fieldset className="border rounded-lg flex gap-2 mt-3 py-5 p-4">
+                    <legend>Data Table</legend>    
+               </fieldset>
           </main>
           </>
      )

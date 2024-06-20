@@ -11,6 +11,7 @@ import { LoadingCustom } from '@/components/custom/Loading'
 import { Send } from 'lucide-react'
 import { format } from 'date-fns'
 import { SelectMultiple } from '@/components/custom/Select/SelectMultiple'
+import { DateRangePicker } from '@/components/custom/Date/DateRangePicker'
 
 export default function FormDocumentation(){
      const [isSubmittingValue, setIsSubmittingValue] = useState(false);
@@ -19,8 +20,8 @@ export default function FormDocumentation(){
           defaultValues: ({
                date: '2024-04-10',
                dateRange: {
-                    from: '',
-                    to: ''
+                    from: "",
+                    to: "",
                },
                status: [],  
           }),
@@ -31,7 +32,9 @@ export default function FormDocumentation(){
                     status: value.status.map((val, ind) => {
                          // console.log(val.value, '::VAL::')
                          return val.value
-                    })
+                    }),
+                    dateFrom: format(value.dateRange.from, 'yyyy-MM-dd'),
+                    dateTo: format(value.dateRange.to, 'yyyy-MM-dd')
                }
 
                
@@ -53,7 +56,7 @@ export default function FormDocumentation(){
                               return (
                                    <div>
                                         <div className="grid gap-2">
-                                             <Label htmlFor={field.name} value="Date Picker" isRequired={true} />
+                                             <Label htmlFor={field.name} value="Date Picker" isRequired={false} />
                                              <DatePicker 
                                                   id={field.name}
                                                   name={field.name}
@@ -88,12 +91,34 @@ export default function FormDocumentation(){
                                              clearable={true}
                                              useCallback={true}
                                              // defaultValue={[{value: 'male', label:'Male'}]}
-                                        
                                         />
                                    </div>
                               </div>
                          )
                       }}
+                    />
+
+                    <form.Field 
+                         name='dateRange'
+                         children={(field) => {
+                              return (
+                                   <div>
+                                        <div className='grid gap-2'>
+                                             <Label htmlFor={field.name} value="Date Range" isRequired={false} />
+                                             <DateRangePicker 
+                                                   id={field.name}
+                                                   name={field.name}
+                                                   date={field.state.value}
+                                                   onChange={(val) => field.handleChange(val)}
+                                                   formatLabel="d MMMM yyyy"
+                                                   placeholder="Select date range"
+                                                   range={'weekly'}
+                                             />
+                                        </div>
+                                   </div>
+                              )
+                         }}
+                    
                     
                     />
 
