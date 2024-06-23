@@ -23,6 +23,7 @@ import { yupValidator } from "@tanstack/yup-form-adapter"
 import { Select } from "@/components/custom/Form/select"
 
 import FormDocumentation from "@/components/pages/Documentation/FormDocumentation"
+import TableProducts from "@/components/pages/Documentation/Table/TableProducts"
 
 
 
@@ -365,7 +366,8 @@ export default function Documentation(){
                </section>
 
                <fieldset className="border rounded-lg flex gap-2 mt-3 py-5 p-4">
-                    <legend>Data Table</legend>    
+                    <legend>Data Table Basic</legend> 
+                         <TableProducts />
                </fieldset>
           </main>
           </>

@@ -18,3 +18,42 @@ export const firstCase = (str) => {
   }
   return splitStr?.join(' '); 
 }
+
+export const numberToDot = (value) => {
+  if (!value) return;
+  const inputValue = value.toString().replace(/\./g, '');
+  const formattedValue = inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return formattedValue;
+};
+
+export const dotToNumber = (value) => {
+  if (!value) return;
+  const inputValue = value.replace(/\./g, '');
+  return inputValue;
+};
+
+export const roundLastTwoDigit = (number) => {
+  const lastTwoDigits = number % 100;
+  let roundedNumber;
+
+  if (lastTwoDigits < 50) roundedNumber = number - lastTwoDigits;
+  else roundedNumber = number - lastTwoDigits + 100;
+
+  return roundedNumber;
+};
+
+export const roundUpLastTwoDigit = (number) => {
+  const lastTwoDigits = number % 100;
+  let roundedNumber = number - lastTwoDigits + 100;
+
+  return roundedNumber;
+};
+
+
+export default function PercentageOf(numA, numB) {
+  let percentage = (numA / numB) * 100
+
+  if (percentage < 0) percentage = 0
+
+  return percentage.toFixed(2)
+}
