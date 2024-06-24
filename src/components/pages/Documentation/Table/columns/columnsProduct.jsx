@@ -26,7 +26,7 @@ export const columnsProducts = [
           size: 300,
           cell: (key) => {
                const keyData = key.row.original
-               console.log(keyData)
+               // console.log(keyData)
                return (
                     <>
                     <div className="flex gap-2">

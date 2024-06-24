@@ -8,9 +8,10 @@ import { LoadingCustom } from "@/components/custom/Loading"
 
 export default function TableProducts(){
      const [productLists, setProductLists] = useState({})
+     const [limit, setLimit] = useState(5)
 
      const getAllProducts = async () => {
-          const url = '/api/documentation/dummyJson/products'
+          const url = `/api/documentation/dummyJson/products?limit=${limit}&skip=${0}`
           // const url = 'https://dummyjson.com/products'
           const response = await fetch(url)
           // console.log(response, '::response::')
@@ -30,6 +31,7 @@ export default function TableProducts(){
                <DataTableBasic 
                     data={productLists?.products}
                     columns={columnsProducts}
+                    className={'rounded-lg'}
                
                />
                :

@@ -3,7 +3,7 @@
 import { useState } from "react"
 import ThemeComponents from "@/components/layout/ThemeComponents"
 
-import { Modal } from "@/components/custom/Modal"
+import { Modal } from "@/components/custom/Modal/modal/index"
 import { SkeletonAvatar, SkeletonBadge, SkeletonBadgeWithBorder, SkeletonText } from "@/components/custom/Skeleton"
 import { firstCase } from "@/helpers/Helpers"
 import { Loading, LoadingCustom, LoadingV2 } from "@/components/custom/Loading"
@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/custom/Form/label"
 import { Input } from "@/components/custom/Form/input"
 
-import { CircleX, Send, X } from "lucide-react"
+import { CircleX, Send, X, Trash2 } from "lucide-react"
 
 import { useForm } from "@tanstack/react-form"
 import { Form } from "@/components/custom/Form/index"
@@ -24,6 +24,9 @@ import { Select } from "@/components/custom/Form/select"
 
 import FormDocumentation from "@/components/pages/Documentation/FormDocumentation"
 import TableProducts from "@/components/pages/Documentation/Table/TableProducts"
+import TableAnime from "@/components/pages/Documentation/Table/TableAnime"
+import TableProductsDat from "@/components/pages/Documentation/Table/TableProductsDat"
+import Confirmation from "@/components/custom/Modal/confirmation"
 
 
 
@@ -185,6 +188,22 @@ export default function Documentation(){
                     />
                </fieldset>
                <fieldset className="border rounded-lg flex gap-2 mt-3 py-5 p-4">
+                    <legend>Alert Dialog</legend>
+                         <Confirmation 
+                              trigger={<Button variant="danger"><Trash2 />Delete</Button>}
+                              buttonConfirmation={'delete'}
+                              title={'Are you sure want to delete this?'}
+                              onClickButton={() => console.log('kedelete nih')}
+                         />
+                         <Confirmation 
+                              trigger={<Button variant="success">Submit</Button>}
+                              title={'Login'}
+                              subTitle={' '}
+                              buttonConfirmation={'submit'}
+                              onClickButton={() => console.log('kesubmit nih')}
+                         />
+               </fieldset>
+               <fieldset className="border rounded-lg flex gap-2 mt-3 py-5 p-4">
                     <legend>Loading</legend>
                     <section className="flex gap-5">
                          <div>
@@ -201,7 +220,6 @@ export default function Documentation(){
                          </div>
                     </section>
                </fieldset>
-
                <section className="grid grid-cols-2 gap-3">
                     <div>
                          <fieldset className="border rounded-lg mt-3 py-5 p-4">
@@ -368,6 +386,16 @@ export default function Documentation(){
                <fieldset className="border rounded-lg flex gap-2 mt-3 py-5 p-4">
                     <legend>Data Table Basic</legend> 
                          <TableProducts />
+               </fieldset>
+
+               <fieldset className="border rounded-lg flex gap-2 mt-3 py-5 p-4">
+                    <legend>Data Table with Filters</legend>
+                         <TableAnime />
+               </fieldset>
+
+               <fieldset className="border rounded-lg flex gap-2 mt-3 py-5 p-4">
+                    <legend>Data Table</legend>
+                    <TableProductsDat />
                </fieldset>
           </main>
           </>

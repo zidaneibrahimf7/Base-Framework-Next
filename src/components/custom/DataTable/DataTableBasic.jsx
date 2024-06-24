@@ -36,12 +36,12 @@ export function DataTableBasic({
           <div className={className}>
                 <div className="rounded-md border">
                     <Table>
-                         <TableHeader>
+                         <TableHeader className="bg-primary">
                              {table.getHeaderGroups().map((headerGroup) => (
                                    <TableRow key={headerGroup.id}>
                                         {headerGroup.headers.map((header) => {
                                              return (
-                                                  <TableHead key={header.id} style={{ width: `${header.getSize()}px` }}>
+                                                  <TableHead key={header.id} className="text-secondary" style={{ width: `${header.getSize()}px` }}>
                                                        {header.isPlaceholder
                                                             ? null
                                                             : flexRender(
