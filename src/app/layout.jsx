@@ -3,6 +3,8 @@ import "./globals.css";
 import { Gabarito as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/context/theme-provider";
+import ReactQueryClientProvider from "@/context/ReactQueryClientProvider";
+import { Toaster } from "react-hot-toast";
 
 // const gabarito = Gabarito({ subsets: ["latin"] });
 const fontSans = FontSans({
@@ -25,14 +27,17 @@ export default function RootLayout({ children }) {
           fontSans.variable
         )}
       >
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
+        <ReactQueryClientProvider>
+          <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Toaster />
+              {children}
+            </ThemeProvider>
+        </ReactQueryClientProvider>
       </body>
     </html>
   );

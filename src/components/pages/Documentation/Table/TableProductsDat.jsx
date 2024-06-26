@@ -9,11 +9,11 @@ import { usePagination } from '@/hooks/table-pagination'
 import { columnsProducts } from './columns/columnsProduct'
 
 export default function TableProductsDat(){
-     const rowEachPage = 0
+     const rowEachPage = 30
      const [productLists, setProductLists] = useState({})
      const { sortKey, sortOrder, onSortingChange, sorting } = useSorting('-title')
-     // const [limit, setLimit] = useState(0)
-     const {offset, limit, onPaginationChange, pagination} = usePagination(rowEachPage)
+     const [limit, setLimit] = useState(0)
+     // const {offset, limit, onPaginationChange, pagination} = usePagination(rowEachPage)
 
      // console.log(sortOrder)
      // console.log(offset)
@@ -25,7 +25,8 @@ export default function TableProductsDat(){
      }
 
      const getAllProducts = async () => {
-          const url = `/api/documentation/dummyJson/products?limit=${limit}&skip=${offset}&sortBy=${sortKey}&order=${orderVal}`
+          // const url = `/api/documentation/dummyJson/products?limit=${limit}&skip=${offset}&sortBy=${sortKey}&order=${orderVal}`
+          const url = `/api/documentation/dummyJson/products?limit=${limit}&skip=${limit}&sortBy=${sortKey}&order=${orderVal}`
           // const url = 'https://dummyjson.com/products'
           const response = await fetch(url)
           // console.log(response, '::response::')
@@ -52,8 +53,8 @@ export default function TableProductsDat(){
                     // error={error}
                     sorting={sorting}
                     onSortingChange={onSortingChange}
-                    pagination={pagination}
-                    onPaginationChange={onPaginationChange}
+                    // pagination={pagination}
+                    // onPaginationChange={onPaginationChange}
                     rowEachPage={rowEachPage}
                />
                :

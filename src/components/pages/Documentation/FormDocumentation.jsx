@@ -12,6 +12,8 @@ import { Send } from 'lucide-react'
 import { format } from 'date-fns'
 import { SelectMultiple } from '@/components/custom/Select/SelectMultiple'
 import { DateRangePicker } from '@/components/custom/Date/DateRangePicker'
+import { Toaster } from 'react-hot-toast'
+import { ToasterError, ToasterNotif, ToasterSuccess, ToasterWarning } from '@/components/custom/Toast'
 
 export default function FormDocumentation(){
      const [isSubmittingValue, setIsSubmittingValue] = useState(false);
@@ -42,6 +44,9 @@ export default function FormDocumentation(){
                await new Promise(resolve => setTimeout(resolve, 1000));
                console.log(params, "::params::")
                // console.log(value, '::values::');
+               if(params){
+                    ToasterSuccess('Success', 'top')
+               }
                setIsSubmittingValue(false);
           }
      })
@@ -137,7 +142,7 @@ export default function FormDocumentation(){
                          </form.Subscribe>
                     </div>
                </Form>
-
+               {/* <Toaster /> */}
           </>
      )
 }

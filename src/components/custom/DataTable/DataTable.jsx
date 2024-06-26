@@ -127,7 +127,7 @@ export default function DataTable({
                          </TableBody>
                     </Table>
                </div>
-               {/* <Pagination table={table} rowEachPage={rowEachPage} /> */}
+               <Pagination table={table} rowEachPage={rowEachPage} />
           </div>
      ) 
 }

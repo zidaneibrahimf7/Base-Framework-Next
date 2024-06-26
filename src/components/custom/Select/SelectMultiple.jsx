@@ -24,7 +24,7 @@ export function SelectMultiple({
           new Promise((resolve) => {
             setTimeout(() => {
               resolve(optionsValue);
-            }, 10000);
+            }, 4000);
      });
 
      const customStyles = {

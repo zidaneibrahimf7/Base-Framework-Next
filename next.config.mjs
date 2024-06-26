@@ -6,6 +6,9 @@ const nextConfig = {
                     hostname: 'cdn.dummyjson.com'
                },
                {
+                    hostname: 'dummyjson.com'
+               },
+               {
                     hostname: 'cdn.myanimelist.net'
                },
           ]

@@ -27,6 +27,14 @@ import TableProducts from "@/components/pages/Documentation/Table/TableProducts"
 import TableAnime from "@/components/pages/Documentation/Table/TableAnime"
 import TableProductsDat from "@/components/pages/Documentation/Table/TableProductsDat"
 import Confirmation from "@/components/custom/Modal/confirmation"
+import TableAnimeTopDat from "@/components/pages/Documentation/Table/TableAnimeTopDat"
+import ProductsCards from "@/components/pages/Documentation/CardsContent/ProductsCards"
+import Carousel from "@/components/custom/Carousel"
+import CarouselAutoPlay from "@/components/custom/Carousel/CarouselAutoPlay"
+import { Card, CardContent } from '@/components/ui/card'
+import { CarouselItem } from '@/components/ui/carousel'
+import ProductsCarousel from "@/components/pages/Documentation/CarouselContent/ProductsCarousel"
+import CarouselAutoScroll from "@/components/custom/Carousel/CarouselAutoScroll"
 
 
 
@@ -220,6 +228,103 @@ export default function Documentation(){
                          </div>
                     </section>
                </fieldset>
+
+               <fieldset className="border rounded-lg flex gap-2 mt-3 py-5 p-4">
+                    <legend>Cards</legend>
+                    <ProductsCards />
+               </fieldset>
+
+               <fieldset className="border rounded-lg flex gap-2 mt-3 py-5 p-4">
+                    <legend>Carousel</legend>
+                    <div className="grid grid-cols-10">
+                         <div className='col-span-2 col-start-1' name="Carousel Horizontal">
+                              <h1>Carousel Default Horizontal</h1>
+                              <Carousel
+                                   view={'horizontal'}
+                                   classNameContent={''}
+                                   content={
+                                   Array.from({ length: 5 }).map((_, index) => (
+                                             <CarouselItem key={index} className="">
+                                                  <div className="p-1">
+                                                       <Card className="">
+                                                            <CardContent className="flex aspect-square items-center justify-center p-6">
+                                                                 <span className="text-4xl font-semibold">{index + 1}</span>
+                                                            </CardContent>
+                                                       </Card>
+                                                  </div>
+                                             </CarouselItem>
+                                        ))
+                                   }
+                              />
+                         </div>
+                         <div className="col-span-2 col-start-3">
+                                <h1>Carousel Default Vertical</h1>
+                               <Carousel
+                                   view={'vertical'}
+                                   // className={'w-full max-w-xs'}
+                                   classNameContent={'-mt-1 h-[320px]'}
+                                   content={
+                                   Array.from({ length: 5 }).map((_, index) => (
+                                             <CarouselItem key={index} className="pt-1 md:basis-1/2">
+                                             <div className="p-1">
+                                             <Card>
+                                                  <CardContent className="flex aspect-square items-center justify-center p-1">
+                                                       <span className="text-4xl font-semibold">{index + 1}</span>
+                                                  </CardContent>
+                                             </Card>
+                                             </div>
+                                             </CarouselItem>
+                                        ))
+                                   }
+                              />
+                              
+                         </div>
+                         <div className="col-span-2 col-start-5">
+                                <h1>Carousel With Delay</h1>
+                               <CarouselAutoPlay
+                                   view={'horizontal'}
+                                   classNameContent={''}
+                                   content={
+                                   Array.from({ length: 5 }).map((_, index) => (
+                                             <CarouselItem key={index} className="">
+                                             <div className="p-1">
+                                             <Card>
+                                                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                                                       <span className="text-4xl font-semibold">{index + 1}</span>
+                                                  </CardContent>
+                                             </Card>
+                                             </div>
+                                             </CarouselItem>
+                                        ))
+                                   }
+                              />
+                              
+                         </div>
+                         <div className="col-span-2 col-start-7">
+                                <h1>Carousel With Auto Scroll</h1>
+                               <CarouselAutoScroll
+                                   view={'horizontal'}
+                                   classNameContent={''}
+                                   content={
+                                   Array.from({ length: 5 }).map((_, index) => (
+                                             <CarouselItem key={index} className="">
+                                             <div className="p-1">
+                                             <Card>
+                                                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                                                       <span className="text-4xl font-semibold">{index + 1}</span>
+                                                  </CardContent>
+                                             </Card>
+                                             </div>
+                                             </CarouselItem>
+                                        ))
+                                   }
+                              />
+                              
+                         </div>
+                    {/* <ProductsCarousel /> */}
+                    </div>
+               </fieldset>
+
                <section className="grid grid-cols-2 gap-3">
                     <div>
                          <fieldset className="border rounded-lg mt-3 py-5 p-4">
@@ -395,7 +500,8 @@ export default function Documentation(){
 
                <fieldset className="border rounded-lg flex gap-2 mt-3 py-5 p-4">
                     <legend>Data Table</legend>
-                    <TableProductsDat />
+                    {/* <TableProductsDat /> */}
+                    <TableAnimeTopDat />
                </fieldset>
           </main>
           </>

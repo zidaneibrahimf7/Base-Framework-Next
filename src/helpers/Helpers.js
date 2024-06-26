@@ -1,6 +1,5 @@
 'use client'
 
-
 export const ChangeFormatAmount = (amount) => {
      const formattedNumber = amount.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
      return formattedNumber;
@@ -56,4 +55,40 @@ export default function PercentageOf(numA, numB) {
   if (percentage < 0) percentage = 0
 
   return percentage.toFixed(2)
+}
+
+export async function toBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        if (file instanceof Blob) {
+            // console.log('File is a Blob, proceeding with conversion...');
+            reader.readAsDataURL(file);
+
+            const obj = { "type": file.type, "name": file.name };
+            reader.onload = () => resolve({ ...obj, "value": reader.result.split(',')[1] });
+            reader.onerror = (error) => {
+                console.error('Error reading file:', error);
+                reject(error);
+            };
+        } else {
+            console.warn('File is not a Blob:', file);
+            reject(new Error('The provided file is not a Blob.'));
+        }
+    });
+}
+
+export function truncate(str, limit) {
+    var trimmable = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u180E\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u2028\u2029\u3000\uFEFF';
+    var reg = new RegExp('(?=[' + trimmable + '])');
+    var words = str?.split(reg);
+    var count = 0;
+    if (limit > str?.length) {
+        return str;
+    } else {
+        return words?.filter(function(word) {
+            count += word.length;
+            return count <= limit;
+        }).join('') + "...";
+    }
 }
