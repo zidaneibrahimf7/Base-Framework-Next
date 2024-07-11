@@ -17,10 +17,15 @@ export default function CarouselAutoScroll({
      content,
      className,
      classNameContent,
+     classNameCarouselContent,
+     classNameCards,
+     usingCard,
      speed,
      direction,
      ...props
 }){
+     const isObject = typeof content === 'object' && !Array.isArray(content);
+
      return (
           <CarouselUI 
                orientation={view === 'vertical' ? 'vertical' : 'horizontal'}
@@ -33,6 +38,7 @@ export default function CarouselAutoScroll({
                          speed: speed || 1,
                          direction: direction || 'forward',
                          stopOnInteraction: false,
+                         startDelay: () => ResetIcon
                          // playOnInit: true,
                          // stopOnFocusIn: true
                     })
@@ -45,7 +51,31 @@ export default function CarouselAutoScroll({
                {...props}
                >
                <CarouselContent className={classNameContent}>
-                    {content}
+               {isObject
+                         ? Object.keys(content).map((key) => (
+                              <CarouselItem key={key} className={classNameCarouselContent}>
+                                   {
+                                        usingCard ?
+                                        <div className="p-1" key={key}>
+                                             <Card>
+                                                       <CardContent className={ classNameCards ? classNameCards : "flex aspect-square items-center justify-center p-1"}>
+                                                            {content[key]}
+                                                       </CardContent>
+                                             </Card>
+                                        </div>
+                                        :
+                                        <div className="p-1" key={key}>
+                                             {content[key]}
+                                        </div>
+                                   }
+                              </CarouselItem>
+                         ))
+                         : content.map((item, index) => (
+                              <CarouselItem key={index} className={classNameCarouselContent}>
+
+                                   {item}
+                              </CarouselItem>
+               ))}
                </CarouselContent>
                {/* <CarouselPrevious />
                <CarouselNext /> */}

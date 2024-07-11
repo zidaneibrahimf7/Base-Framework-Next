@@ -9,7 +9,7 @@ import { firstCase } from "@/helpers/Helpers"
 import { Loading, LoadingCustom, LoadingV2 } from "@/components/custom/Loading"
 
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Label } from "@/components/custom/Form/label"
 import { Input } from "@/components/custom/Form/input"
 
@@ -33,13 +33,21 @@ import Carousel from "@/components/custom/Carousel"
 import CarouselAutoPlay from "@/components/custom/Carousel/CarouselAutoPlay"
 import { Card, CardContent } from '@/components/ui/card'
 import { CarouselItem } from '@/components/ui/carousel'
-import ProductsCarousel from "@/components/pages/Documentation/CarouselContent/ProductsCarousel"
 import CarouselAutoScroll from "@/components/custom/Carousel/CarouselAutoScroll"
+import DropdownMenu from "@/components/custom/DropdownMenu"
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
+import { IoMenu } from "react-icons/io5";
+import { RiMenuUnfoldLine } from "react-icons/ri";
+import { useRouter } from "next/navigation"
+import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 
 
 export default function Documentation(){
      const [open, setOpen] = useState(false)
+     const [openEscapeDown, setOpenEscapeDown] = useState(false)
+     const [openInteractOutside, setOpenInteractOutside] = useState(false)
 
      const [themeName, setThemeName] = useState('System')
      const handleThemes = (e) => setThemeName(firstCase(e))
@@ -85,11 +93,13 @@ export default function Documentation(){
           }, 300); // Sesuaikan durasi delay sesuai dengan durasi transisi
       };
 
+      const router = useRouter()
+
      return (
           <>
           <main className="m-3 p-3">
                <header className="flex justify-between">
-                    <h1 className="text-3xl">Playground Page</h1>
+                    <h1 className="text-3xl">Documentation Page</h1>
                     <div className="flex gap-2">
                          {/* <Label className="mt-3 pr-3">Theme: {themeName}</Label> */}
                          <Label className="mt-3 pr-3" value={`Theme: ${themeName}`} isRequired={false} />
@@ -185,32 +195,92 @@ export default function Documentation(){
                     />
                     <Modal 
                          open={open}
+                         onOpenChange={setOpen}
                          Trigger={<Button onClick={() => setOpen(true)}>Open Modal Content</Button>}
                          Title={'Playground Modal'}
                          Content={<Button variant='danger' onClick={() => setOpen(false)}>Cancel</Button>}
                          SubTitle={'lorem ipsum dolor siamet'}
                          FontTitle={'text-2xl'}
-                         CloseButton={() => setOpen(false)}
                          Size={'max-w-[400px]'}
                          className={'dark:bg-blue-300'}
                     />
+                    <Modal 
+                         open={openEscapeDown}
+                         onOpenChange={setOpenEscapeDown}
+                         onEscapeKeyDown={(e) => {
+                              e.preventDefault()
+                              if(e.key === 'Escape') setOpenEscapeDown(true)}
+                         }
+                         Trigger={<Button onClick={() => setOpenEscapeDown(true)}>Open Modal Content Key Escape Down</Button>}
+                         Title={'Playground Modal'}
+                         Content={<Button variant='danger' onClick={() => setOpenEscapeDown(false)}>Cancel</Button>}
+                         SubTitle={'lorem ipsum dolor siamet'}
+                         FontTitle={'text-2xl'}
+                         Size={'max-w-[20rem]'}
+                         className={'dark:bg-slate-300'}
+                    />
+                    <Modal 
+                         open={openInteractOutside}
+                         onOpenChange={setOpenInteractOutside}
+                         onInteractOutside={(e) => {
+                              e.preventDefault()
+                              if(e.timestamp){
+                                   setOpenInteractOutside(true)
+                              }
+                              }
+                         }
+                         Trigger={<Button onClick={() => setOpenInteractOutside(true)}>Open Modal Content Interact Outside</Button>}
+                         Title={'Playground Modal'}
+                         Content={<Button variant='danger' onClick={() => setOpenInteractOutside(false)}>Cancel</Button>}
+                         SubTitle={'lorem ipsum dolor siamet'}
+                         FontTitle={'text-2xl'}
+                         Size={'max-w-[20rem]'}
+                         className={'dark:bg-slate-300'}
+                    />
+
                </fieldset>
-               <fieldset className="border rounded-lg flex gap-2 mt-3 py-5 p-4">
-                    <legend>Alert Dialog</legend>
-                         <Confirmation 
-                              trigger={<Button variant="danger"><Trash2 />Delete</Button>}
-                              buttonConfirmation={'delete'}
-                              title={'Are you sure want to delete this?'}
-                              onClickButton={() => console.log('kedelete nih')}
-                         />
-                         <Confirmation 
-                              trigger={<Button variant="success">Submit</Button>}
-                              title={'Login'}
-                              subTitle={' '}
-                              buttonConfirmation={'submit'}
-                              onClickButton={() => console.log('kesubmit nih')}
-                         />
-               </fieldset>
+
+               <section className="grid grid-cols-2 gap-2">
+                    <fieldset className="border rounded-lg flex gap-2 mt-3 py-5 p-4">
+                         <legend>Alert Dialog</legend>
+                              <Confirmation 
+                                   trigger={<Button variant="danger"><Trash2 />Delete</Button>}
+                                   buttonConfirmation={'delete'}
+                                   title={'Are you sure want to delete this?'}
+                                   onClickButton={() => console.log('kedelete nih')}
+                              />
+                              <Confirmation 
+                                   trigger={<Button variant="success">Submit</Button>}
+                                   title={'Login'}
+                                   subTitle={' '}
+                                   buttonConfirmation={'submit'}
+                                   onClickButton={() => console.log('kesubmit nih')}
+                              />
+                    </fieldset>
+                    <fieldset className="border rounded-lg flex gap-2 mt-3 py-5 p-4">
+                          <legend>Dropdown Menu</legend>
+                          <DropdownMenu
+                              trigger={<Button>Open Dropdown Menu</Button>}
+                              // title={'My Account'}
+                              content={{
+                                   // menu1: 'Go'
+                                   menu1: <Button variant="link" onClick={() => console.log('GO')}>Go</Button>,
+                                   menu2: <Button variant="link" onClick={() => router.push('/')}>Home</Button>
+                              }}
+                          />
+                          <DropdownMenu
+                              trigger={<button className="text-center flex justify-center"><IoMenu size={30} /></button>}
+                              // title={'My Account'}
+                              classNameBox={'bg-blue-100'}
+                              classNameMenu={'focus:bg-warning'}
+                              content={{
+                                   menu1: <Button>Yuhu</Button>,
+                                   menu2: <Link href="/" className={cn(buttonVariants({variant: 'danger'}))}>Home</Link>
+                              }}
+                          />
+                    </fieldset>
+               </section>
+
                <fieldset className="border rounded-lg flex gap-2 mt-3 py-5 p-4">
                     <legend>Loading</legend>
                     <section className="flex gap-5">
@@ -242,39 +312,32 @@ export default function Documentation(){
                               <Carousel
                                    view={'horizontal'}
                                    classNameContent={''}
-                                   content={
-                                   Array.from({ length: 5 }).map((_, index) => (
-                                             <CarouselItem key={index} className="">
-                                                  <div className="p-1">
-                                                       <Card className="">
-                                                            <CardContent className="flex aspect-square items-center justify-center p-6">
-                                                                 <span className="text-4xl font-semibold">{index + 1}</span>
-                                                            </CardContent>
-                                                       </Card>
-                                                  </div>
-                                             </CarouselItem>
-                                        ))
-                                   }
+                                   usingCard={true}
+                                   classNameCarouselContent={''}
+                                   content={{
+                                        carousel1:  'Gambar 1',
+                                        carousel2: <span>3</span>
+                                   }}
                               />
                          </div>
-                         <div className="col-span-2 col-start-3">
+                         <div className="col-span-2 col-start-3"  name="Carousel Vertical">
                                 <h1>Carousel Default Vertical</h1>
                                <Carousel
                                    view={'vertical'}
                                    // className={'w-full max-w-xs'}
                                    classNameContent={'-mt-1 h-[320px]'}
                                    content={
-                                   Array.from({ length: 5 }).map((_, index) => (
-                                             <CarouselItem key={index} className="pt-1 md:basis-1/2">
-                                             <div className="p-1">
-                                             <Card>
-                                                  <CardContent className="flex aspect-square items-center justify-center p-1">
-                                                       <span className="text-4xl font-semibold">{index + 1}</span>
-                                                  </CardContent>
-                                             </Card>
-                                             </div>
-                                             </CarouselItem>
-                                        ))
+                                        Array.from({ length: 5 }).map((_, index) => (
+                                                  <CarouselItem key={index} className="pt-1 md:basis-1/2">
+                                                  <div className="p-1">
+                                                  <Card>
+                                                       <CardContent className="flex aspect-square items-center justify-center p-1">
+                                                            <span className="text-4xl font-semibold">{index + 1}</span>
+                                                       </CardContent>
+                                                  </Card>
+                                                  </div>
+                                                  </CarouselItem>
+                                             ))
                                    }
                               />
                               
@@ -285,17 +348,17 @@ export default function Documentation(){
                                    view={'horizontal'}
                                    classNameContent={''}
                                    content={
-                                   Array.from({ length: 5 }).map((_, index) => (
-                                             <CarouselItem key={index} className="">
-                                             <div className="p-1">
-                                             <Card>
-                                                  <CardContent className="flex aspect-square items-center justify-center p-6">
-                                                       <span className="text-4xl font-semibold">{index + 1}</span>
-                                                  </CardContent>
-                                             </Card>
-                                             </div>
-                                             </CarouselItem>
-                                        ))
+                                        Array.from({ length: 5 }).map((_, index) => (
+                                                  <CarouselItem key={index} className="">
+                                                  <div className="p-1">
+                                                  <Card>
+                                                       <CardContent className="flex aspect-square items-center justify-center p-6">
+                                                            <span className="text-4xl font-semibold">{index + 1}</span>
+                                                       </CardContent>
+                                                  </Card>
+                                                  </div>
+                                                  </CarouselItem>
+                                             ))
                                    }
                               />
                               

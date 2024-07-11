@@ -23,6 +23,10 @@ export function Modal({
      CloseButton,
      FontTitle,
      Size,
+     onCloseAutoFocus,
+     onEscapeKeyDown,
+     onInteractOutside,
+     onPointerDownOutside,
      ...props
 }){
      let size
@@ -52,7 +56,7 @@ export function Modal({
           <Dialog {...props}>
                <DialogTrigger asChild>{Trigger}</DialogTrigger>
                {/* <DialogContent className={className ? className : "sm:max-w-[425px]"}> */}
-               <DialogContent className={`${size}`}>
+               <DialogContent className={`${size}`} onEscapeKeyDown={onEscapeKeyDown} onPointerDownOutside={onPointerDownOutside} onCloseAutoFocus={onCloseAutoFocus} onInteractOutside={onInteractOutside}>
                     <DialogHeader>
                          <DialogTitle className={FontTitle ? FontTitle : 'text-md'}>{Title || '?'}</DialogTitle>
                          <DialogDescription>{SubTitle}</DialogDescription>

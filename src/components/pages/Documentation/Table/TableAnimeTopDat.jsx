@@ -42,6 +42,7 @@ export default function TableAnimeTopDat(){
                               onSortingChange={onSortingChange}
                               pagination={pagination}
                               onPaginationChange={onPaginationChange}
+                              rowEachPage={rowEachPage}
 
                          />
                     :

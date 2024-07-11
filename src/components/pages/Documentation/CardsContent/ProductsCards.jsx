@@ -36,7 +36,7 @@ export default function ProductsCards(){
                     // console.log(data, '::data::')
                     data?.products.length > 0 ?
                          data.products.map((val, ind) => {
-                              console.log(val, ind)
+                              // console.log(val, ind)
                               const imageProducts = val.images[0]
                               const availableStock = val.availabilityStatus
                               const qrCodeImage = val.meta.qrCode
