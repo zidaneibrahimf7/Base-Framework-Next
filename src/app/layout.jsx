@@ -1,9 +1,11 @@
 import "./globals.css";
+import 'mapbox-gl/dist/mapbox-gl.css';
 // import { Gabarito } from "next/font/google";
 import { Gabarito as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/context/theme-provider";
 import ReactQueryClientProvider from "@/context/ReactQueryClientProvider";
+import ReactMapProvider from '@/context/ReactMapProvider'
 import { Toaster } from "react-hot-toast";
 
 // const gabarito = Gabarito({ subsets: ["latin"] });
@@ -28,15 +30,17 @@ export default function RootLayout({ children }) {
         )}
       >
         <ReactQueryClientProvider>
-          <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <Toaster />
-              {children}
-            </ThemeProvider>
+          <ReactMapProvider>
+            <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                <Toaster />
+                {children}
+              </ThemeProvider>
+          </ReactMapProvider>
         </ReactQueryClientProvider>
       </body>
     </html>
