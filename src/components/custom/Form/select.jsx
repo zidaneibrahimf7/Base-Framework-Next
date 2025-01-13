@@ -14,10 +14,11 @@ import { firstCase } from "@/helpers/Helpers"
      placeholder,
      className,
      fullWidth,
+     defaultValue,
      ...props
    }) {
      return (
-       <SelectUI {...props}>
+       <SelectUI {...props} defaultValue={defaultValue}>
          <SelectTrigger className={fullWidth ? "w-full" : 'w-auto'}>
            <SelectValue placeholder={placeholder} />
          </SelectTrigger>
