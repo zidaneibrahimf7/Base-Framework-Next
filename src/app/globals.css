@@ -25,18 +25,17 @@
       --accent: 210 40% 96.1%;
       --accent-foreground: 222.2 47.4% 11.2%;
 
-      --danger: 0 84.2% 60.2%;
+      --danger: 359 91% 64%;
       --danger-foreground: 210 40% 98%;
 
-      --warning: 50 93% 52%;
-      --warning-foreground: 210 40% 98%;
+      --warning: 40 100% 50%;
+      --warning-foreground: 26 83.3% 14.1%;
 
-      --success: 123 76% 45%;
+      --success: 162 82% 36%;
       --success-foreground: 210 40% 98%;
 
-      --info: 210 83% 60%;
+      --info: 219 92% 59%;
       --info-foreground: 210 40% 98%;
-
 
       --border: 214.3 31.8% 91.4%;
       --input: 214.3 31.8% 91.4%;
@@ -67,16 +66,17 @@
       --accent: 217.2 32.6% 17.5%;
       --accent-foreground: 210 40% 98%;
 
-      --danger: 357 100% 63%;
+      --danger: 359 91% 64%;
       --danger-foreground: 217.2 32.6% 17.5%;;
 
-      --warning: 45 100% 61%;
+      --warning: 40 100% 50%;
       --warning-foreground:  217.2 32.6% 17.5%;
 
-      --success: 135 99% 48%;
+      --success: 133 66% 51%;
       --success-foreground:  217.2 32.6% 17.5%;
 
-      --info: 210 83% 60%;
+
+      --info: 219 92% 59%;
       --info-foreground: 210 40% 98%;
 
       --border: 217.2 32.6% 17.5%;
@@ -106,35 +106,26 @@
       transform: rotate(720deg);
     }
   }
-  /* HTML: <div class="loader"></div> */
+
+ /* HTML: <div class="loader"></div> */
 .loader {
-  width: 50px;
-  aspect-ratio: 1;
-  display: grid;
-}
-.loader::before,
-.loader::after {    
-  content:"";
-  grid-area: 1/1;
-  --c:no-repeat radial-gradient(farthest-side,#25b09b 92%,#0000);
+  width: 60px;
+  aspect-ratio: 2;
+  --_g: no-repeat radial-gradient(circle closest-side,#000 90%,#0000);
   background: 
-    var(--c) 50%  0, 
-    var(--c) 50%  100%, 
-    var(--c) 100% 50%, 
-    var(--c) 0    50%;
-  background-size: 12px 12px;
-  animation: l12 1s infinite;
+    var(--_g) 0%   50%,
+    var(--_g) 50%  50%,
+    var(--_g) 100% 50%;
+  background-size: calc(100%/3) 50%;
+  animation: l3 1s infinite linear;
 }
-.loader::before {
-  margin: 4px;
-  filter: hue-rotate(45deg);
-  background-size: 8px 8px;
-  animation-timing-function: linear
+@keyframes l3 {
+    20%{background-position:0%   0%, 50%  50%,100%  50%}
+    40%{background-position:0% 100%, 50%   0%,100%  50%}
+    60%{background-position:0%  50%, 50% 100%,100%   0%}
+    80%{background-position:0%  50%, 50%  50%,100% 100%}
 }
 
-@keyframes l12 { 
-  100%{transform: rotate(.5turn)}
-}
 
 .rdp-vhidden {
   @apply hidden;
@@ -143,4 +134,33 @@
 .rdp-caption_dropdowns {
   display: flex;
   gap: 14px
+}
+
+.rti--input {
+  width: 100% !important;
+  font-size: 15px !important;
+}
+
+.mapboxgl-ctrl-logo {
+    display: none !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .rti--input {
+    width: 100% !important;
+    background-color: var(--primary) !important;
+    font-size: 15px !important;
+  }
+
+  .rti--container {
+    background-color: var(--secondary) !important;
+  }
+
+  .rti--tag {
+    color: black
+  }
+
+  .mapboxgl-ctrl-logo {
+    display: none !important;
+}
 }

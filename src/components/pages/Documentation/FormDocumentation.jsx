@@ -12,7 +12,6 @@ import { Send } from 'lucide-react'
 import { format } from 'date-fns'
 import { SelectMultiple } from '@/components/custom/Select/SelectMultiple'
 import { DateRangePicker } from '@/components/custom/Date/DateRangePicker'
-import { Toaster } from 'react-hot-toast'
 import { ToasterError, ToasterNotif, ToasterSuccess, ToasterWarning } from '@/components/custom/Toast'
 
 export default function FormDocumentation(){

@@ -24,7 +24,7 @@ export function SelectMultiple({
           new Promise((resolve) => {
             setTimeout(() => {
               resolve(optionsValue);
-            }, 4000);
+            }, 3000);
      });
 
      const customStyles = {
@@ -39,7 +39,7 @@ export function SelectMultiple({
                     borderColor: 'hsl(var(--input))',
                     backgroundColor: 'hsl(var(--background))',
                     color: 'hsl(var(--primary))',
-                    padding: '10px',
+                    padding: '5px',
                     ':hover': {
                          opacity: 10,
                          // borderColor: 'yellow',
@@ -72,7 +72,7 @@ export function SelectMultiple({
                  ...styles,
                  color: 'hsl(var(--primary-foreground))',
                  backgroundColor: 'hsl(var(--primary))',
-                 borderRadius: '20px',
+                 borderRadius: '5px',
                  ":hover": {
                     opacity: 10,
                     backgroundColor: 'hsl(var(--primary))'
@@ -87,9 +87,9 @@ export function SelectMultiple({
                ...styles,
                // color: data.color,
                ':hover': {
-                 borderRadius: '20px',
-                 backgroundColor: 'rgb(254 202 202)',
-                 color: 'red',
+                 borderRadius: '5px',
+                 backgroundColor: 'hsl(var(--danger))',
+                 color: 'hsl(var(--danger-foreground))',
                  cursor: 'pointer'
                },
           }),

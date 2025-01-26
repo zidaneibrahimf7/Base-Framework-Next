@@ -1,10 +1,7 @@
 'use client'
 
-import React, {useState, useRef, useCallback} from "react"
-import mapboxgl from "mapbox-gl"
+import React, {useState, useRef, useCallback, useEffect} from "react"
 import Mapbox, { FullscreenControl, NavigationControl } from "react-map-gl"
-import { useMap } from "react-map-gl"
-import { Button } from "@/components/ui/button"
 
 const access_token = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
 
@@ -18,6 +15,7 @@ export default function Map({
      control = true,
      fullscreen = true,
      ref,
+     isSpinGlobe,
      ...props
 
 }){
@@ -52,7 +50,7 @@ export default function Map({
                center.lng -= distancePerSecond;
                // Smoothly animate the map over one second.
                // When this animation is complete, it calls a 'moveend' event.
-               mapRef.current.easeTo({ center, duration: 1000, easing: (n) => n });
+               mapRef.current.easeTo({ center, duration: 3000, easing: (n) => n });
                }
           }
 

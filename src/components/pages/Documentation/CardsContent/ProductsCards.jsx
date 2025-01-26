@@ -61,7 +61,7 @@ export default function ProductsCards(){
                               }
 
                               return (
-                                   <Fragment key={val.title || ind}>
+                                   <Fragment key={ind}>
                                         <Cards
                                              title={
                                                   <div className="flex gap-2">
@@ -86,12 +86,12 @@ export default function ProductsCards(){
                                                   }
                                              content={
                                                   <div>
-                                                       <p>{<Expandable children={val.description} maxChars={120} />}</p>
+                                                       <Expandable children={val.description} maxChars={120} />
                                                        {/* <p><Tooltip trigger={truncate(val.description, 100)} content={val.description} /></p> */}
                                                        <div className='flex gap-1 mt-1'>
                                                             {
                                                                  val.tags.map((v, i) => (
-                                                                      <Fragment key={i} className="px-2">
+                                                                      <Fragment key={i}>
                                                                            <span className='italic text-xs'>#{v}</span>
                                                                       </Fragment>
                                                                  ))
@@ -139,8 +139,6 @@ export default function ProductsCards(){
                                                                  </>
                                                             }
                                                        />
-                                                       {/* <Button className="col-span-3">View Ratings</Button> */}
-                                                       {/* <Button variant="danger" className="col-span-2">Delete</Button> */}
                                                        <Modal 
                                                             Trigger={<Button variant="success" className="col-span-2">Buy</Button>}
                                                             Title={`QR CODE Product ${val.title}`}
@@ -153,7 +151,6 @@ export default function ProductsCards(){
                                                        />
                                                   </div>
                                              }
-                                             // className={'w-auto h-auto'}
                                        /> 
                                    </Fragment>
                               )

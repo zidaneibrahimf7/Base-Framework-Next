@@ -21,6 +21,8 @@ const buttonVariants = cva(
           "bg-warning text-warning-foreground shadow-sm hover:bg-warning/80",
         success:
           "bg-success text-success-foreground shadow-sm hover:bg-success/80",
+        info:
+          "bg-info text-info-foreground shadow-sm hover:bg-info/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },

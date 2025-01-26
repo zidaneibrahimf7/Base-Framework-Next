@@ -12,13 +12,13 @@ const Expandable = ({ children, maxChars }) => {
   let textSpace = expanded ? children.substring(0, maxChars) : children
 
   return (
-    <section className='flex flex-wrap'>
+    <div className='flex flex-wrap'>
       {
         expanded ? <p>{textSpace}...</p> : <p>{textSpace}</p>
       }
       {/* <p>{textSpace}...</p> */}
       <Badge variant="" className="p-1 text-xs" onClick={ () => setExpanded(!expanded)}>{expanded ? 'Read More' : 'Read Less' }</Badge>
-    </section>
+    </div>
   )
 }
 

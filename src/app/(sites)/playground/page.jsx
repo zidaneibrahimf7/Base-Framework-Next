@@ -18,7 +18,6 @@ export default function Playground(){
                <header className="flex justify-between">
                     <h1 className="text-3xl">Playground Page</h1>
                     <div className="flex gap-2">
-                         <Label className="mt-3 pr-3" value={`Theme: ${themeName}`} isRequired={false} />
                          <ThemeComponents themeName={handleThemes} />      
                     </div>
                </header>
@@ -27,10 +26,10 @@ export default function Playground(){
                      <MapBoxComponents coordinates={COORDINATES} />
                </fieldset>
                <fieldset className='border rounded-lg mt-3 py-5 p-4'>
-                  <TryHitApi />
+                  {/* <TryHitApi /> */}
                </fieldset>
                <fieldset className='border rounded-lg mt-3 py-5 p-4'>
-                  <HitApiSelf />
+                  {/* <HitApiSelf /> */}
                </fieldset>
           </main>
      )

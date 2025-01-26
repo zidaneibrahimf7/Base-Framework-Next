@@ -6,7 +6,7 @@ import ThemeComponents from "@/components/layout/ThemeComponents"
 import { Modal } from "@/components/custom/Modal/modal/index"
 import { SkeletonAvatar, SkeletonBadge, SkeletonBadgeWithBorder, SkeletonText } from "@/components/custom/Skeleton"
 import { firstCase } from "@/helpers/Helpers"
-import { Loading, LoadingCustom, LoadingV2 } from "@/components/custom/Loading"
+import { DefaultLoading, LoadingCustom, LoadingV2 } from "@/components/custom/Loading"
 
 import { Badge } from "@/components/ui/badge"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -41,6 +41,7 @@ import { RiMenuUnfoldLine } from "react-icons/ri";
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { TagsInput } from "react-tag-input-component"
 
 
 
@@ -101,12 +102,10 @@ export default function Documentation(){
                <header className="flex justify-between">
                     <h1 className="text-3xl">Documentation Page</h1>
                     <div className="flex gap-2">
-                         {/* <Label className="mt-3 pr-3">Theme: {themeName}</Label> */}
-                         <Label className="mt-3 pr-3" value={`Theme: ${themeName}`} isRequired={false} />
                          <ThemeComponents themeName={handleThemes} />      
                     </div>
                </header>
-               <fieldset className='border rounded-lg flex gap-2 mt-3 py-5 p-4'>
+               <fieldset className ='border rounded-lg flex gap-2 mt-3 py-5 p-4'>
                     <legend>Button</legend>
                     <Button variant="">Primary</Button>
                     <Button variant="secondary">Secondary</Button>
@@ -117,6 +116,7 @@ export default function Documentation(){
                     <Button variant="warning">Warning</Button>
                     <Button variant='danger'>Error</Button>
                     <Button disabled={true}>Disabled</Button>
+                    <Button variant="info">Info</Button>
                </fieldset>
                <fieldset className='border rounded-lg flex gap-2 mt-3 py-5 p-4'>
                     <legend>Badge</legend>
@@ -126,6 +126,7 @@ export default function Documentation(){
                     <Badge variant={'success'}>Success</Badge>
                     <Badge variant={'warning'}>Warning</Badge>
                     <Badge variant={'danger'}>Danger</Badge>
+                    <Badge variant={'info'}>Info</Badge>
                </fieldset>
                <fieldset className="border rounded-lg flex gap-2 mt-3 py-5 p-4">
                     <legend>Skeleton</legend>
@@ -285,8 +286,8 @@ export default function Documentation(){
                     <legend>Loading</legend>
                     <section className="flex gap-5">
                          <div>
-                              <div className="flex justify-center"><Loading /></div>
-                              <span className="italic">Loader Default</span>
+                              <DefaultLoading />
+                              <span className="italic">Default Loading</span>
                          </div>
                          <div>
                               <div className="flex justify-center"><LoadingCustom className="text-primary" size="40px" /></div>
@@ -497,33 +498,43 @@ export default function Documentation(){
                                         children={(field) => (
                                              <div>
                                                   <Label htmlFor={field.name} value="Hobbies" isRequired={true} />
-                                             <div className="mb-3">
-                                                  <div className="w-full p-1.5 text-center items-center gap-1 text-xs px-1 flex flex-wrap bg-gray-50/50 dark:bg-transparent text-sm rounded-lg rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors dark:focus:border-white">
-                                                       {field.state.value.map((tag, index) => (
-                                                            // <div className="tag-item" key={index}>
-                                                            <div className={`tag-item ${toBeRemoved === index ? 'transition-opacity duration-300 opacity-0' : ''}`} key={index}>
-                                                                 <Badge className="flex gap-1 my-1.5 rounded-full p-1.5" >
-                                                                      <span className="">{tag}</span >
-                                                                      {/* <div className="cursor-pointer hover:text-danger rounded-full hover:bg-red-200" onClick={() => field.removeValue(index)}><X size={15} className="" /></div> */}
-                                                                      <div
-                                                                           className="cursor-pointer hover:text-danger rounded-full hover:bg-red-200"
-                                                                           onClick={() => handleRemove(index, field)}
-                                                                      >
-                                                                           <X size={15} className="" />
-                                                                      </div>
-                                                                 </Badge>
-                                                            </div>
-                                                       ))}
-                                                       <Input
-                                                            type="text"
-                                                            placeholder="Input yout hobbies"
-                                                            id={field.name}
-                                                            name={field.name}
-                                                            className="w-full text-gray-900 text-sm bg-transparent dark:text-white placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                                                            onKeyDown={(e) => handleKeyDown(e, field)}
-                                                       />
-                                                  </div>
-                                             </div>
+                                                  {/* Using library React Tag Input */}
+                                                  <TagsInput
+                                                       name={field.name}
+                                                       id={field.name}
+                                                       value={field.state.value}
+                                                       onChange={(val) => field.handleChange(val)}
+                                                       placeHolder="enter hobbies"
+                                                       classNames={{
+                                                            input: ''
+                                                       }}
+                                                  />
+                                                  {/* Manual Imput */}
+                                                  {/* <div className="mb-3">
+                                                       <div className="w-full p-1.5 text-center items-center gap-1 text-xs px-1 flex flex-wrap bg-gray-50/50 dark:bg-transparent text-sm rounded-lg rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors dark:focus:border-white">
+                                                            {field.state.value.map((tag, index) => (
+                                                                 <div className={`tag-item ${toBeRemoved === index ? 'transition-opacity duration-300 opacity-0' : ''}`} key={index}>
+                                                                      <Badge className="flex gap-1 my-1.5 rounded-full p-1.5" >
+                                                                           <span className="">{tag}</span >
+                                                                           <div
+                                                                                className="cursor-pointer hover:text-danger rounded-full hover:bg-red-200"
+                                                                                onClick={() => handleRemove(index, field)}
+                                                                           >
+                                                                                <X size={15} className="" />
+                                                                           </div>
+                                                                      </Badge>
+                                                                 </div>
+                                                            ))}
+                                                            <Input
+                                                                 type="text"
+                                                                 placeholder="Input yout hobbies"
+                                                                 id={field.name}
+                                                                 name={field.name}
+                                                                 className="w-full text-gray-900 text-sm bg-transparent dark:text-white placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                                                                 onKeyDown={(e) => handleKeyDown(e, field)}
+                                                            />
+                                                       </div>
+                                                  </div> */}
                                         </div>
                                         )}
                                    />

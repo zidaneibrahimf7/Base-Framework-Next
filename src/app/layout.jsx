@@ -39,6 +39,7 @@ export default function RootLayout({ children }) {
               >
                 <Toaster />
                 {children}
+                {/* <Toaster richColors /> */}
               </ThemeProvider>
           </ReactMapProvider>
         </ReactQueryClientProvider>

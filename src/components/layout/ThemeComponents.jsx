@@ -14,13 +14,6 @@ import {
 
 export default function ThemeComponents({themeName}){
      const { setTheme } = useTheme()
-     const [themes, setThemes] = useState(setTheme)
-
-     useEffect(() => {
-          if(themes){
-               themeName(themes)
-          }
-     }, [themes])
      return (
           <>
            <DropdownMenu>
@@ -32,23 +25,14 @@ export default function ThemeComponents({themeName}){
                     </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                         <DropdownMenuItem onClick={() => {
-                              setTheme("light")
-                              setThemes('light')
-                              }}>
-                         Light
+                         <DropdownMenuItem onClick={() => setTheme("light")}>
+                              Light
                          </DropdownMenuItem>
-                         <DropdownMenuItem onClick={() => {
-                              setTheme("dark")
-                              setThemes('dark')
-                         }}>
-                         Dark
+                         <DropdownMenuItem onClick={() => setTheme("dark")}>
+                              Dark
                          </DropdownMenuItem>
-                         <DropdownMenuItem onClick={() =>{
-                              setTheme("system")
-                              setThemes('system')
-                         }}>
-                         System
+                         <DropdownMenuItem onClick={() => setTheme("system")}>
+                              System
                          </DropdownMenuItem>
                </DropdownMenuContent>
           </DropdownMenu>

@@ -3,13 +3,8 @@
 import { CgSpinner } from 'react-icons/cg'
 import { PiSpinnerBallFill } from "react-icons/pi";
 
-
-export function Loading(){
-     return (
-          <div>
-               <span className="loader"></span>
-          </div>
-     )
+export const DefaultLoading = () => {
+     return <div className='loader'></div>
 }
 
 export const LoadingCustom = (className) => {

@@ -1,193 +1,12 @@
-// 'use client'
-
-// import React, {useState, useRef, useMemo} from "react"
-// import { Button } from "@/components/ui/button"
-// import Source from "react-map-gl/dist/esm/components/source"
-// import { Layer, useMap } from "react-map-gl"
-// import Map from "@/components/custom/MapBox"
-// import {point} from '@turf/helpers'
-
-// const createBezierCurve = (start, end, color) => {
-//     const numberOfPoints = 100; // Jumlah titik pada garis melengkung
-//     const curvePoints = [];
-//     const controlPoint = [
-//         (start[0] + end[0]) / 2, // Kontrol titik di tengah antara start dan end
-//         (start[1] + end[1]) / 2 + Math.max(start[1], end[1]) // Tambahkan offset vertikal
-//     ];
-
-//     for (let i = 0; i <= numberOfPoints; i++) {
-//         const t = i / numberOfPoints;
-//         const x =
-//             (1 - t) * (1 - t) * start[0] +
-//             2 * (1 - t) * t * controlPoint[0] +
-//             t * t * end[0];
-//         const y =
-//             (1 - t) * (1 - t) * start[1] +
-//             2 * (1 - t) * t * controlPoint[1] +
-//             t * t * end[1];
-//         curvePoints.push([x, y]);
-//     }
-
-//     return {
-//         type: "Feature",
-//         geometry: {
-//             type: "LineString",
-//             coordinates: curvePoints,
-//         },
-//         properties: {
-//             color: color
-//         }
-//     };
-// };
-
-// export default function MapBoxComponents({coordinates}){
-//      console.log(coordinates)
-//      const [dataGeoJson, setDataGeoJson] = useState({})
-//      const { current: playgroundMap } = useMap('playgroundMap')
-//      const [centerMap, setCenterMap] = useState([106.8165941, -6.268303])
-//      const result = useMemo(() => ([{
-//           _id: "2HUM21g47EquchXZItZqWfcq6LSC3Q5j",
-//           lat: -6.268303,
-//           lon: 106.8165941,
-//           address: "JAKARTA RAYA, KOTA JAKARTA PUSAT, TANAHABANG, GELORA"
-//      }]), [])
-
-//      // console.log(playgroundMap)
-     
-//      // if (playgroundMap && centerMap) {
-//      // setTimeout(() => {
-//      //      playgroundMap.flyTo({
-//      //      center: centerMap,
-//      //      zoom: 12.5,
-//      //      duration: 12000,
-//      //      bearing: 130,
-//      //      pitch: 75
-//      //      })
-//      // }, 2000)
-//      // }
-
-//       const createCurvedLines = (data) => {
-//         return data.map((v, i) => {
-//             const start = point([v.source_lon, v.source_lat]);
-//             const end = point([v.destination_lon, v.destination_lat]);
-//           //   const line = arc(start, end, { steps: 100, offset: 10 });
-//           console.log(createBezierCurve(start, end, v.color), ':::bezier')
-//           return createBezierCurve(start, end, v.color)
-//         });
-//     };
-
-//     const createMarkers = (data) => {
-//         return data.reduce((acc, v) => {
-//             acc.push({
-//                 type: "Feature",
-//                 geometry: {
-//                     type: "Point",
-//                     coordinates: [v.source_lon, v.source_lat]
-//                 },
-//                 properties: {
-//                     color: v.color
-//                 }
-//             });
-//             acc.push({
-//                 type: "Feature",
-//                 geometry: {
-//                     type: "Point",
-//                     coordinates: [v.destination_lon, v.destination_lat]
-//                 },
-//                 properties: {
-//                     color: v.color
-//                 }
-//             });
-//             return acc;
-//         }, []);
-//     };
-
-//      const lines = useMemo(() => createCurvedLines(coordinates), [coordinates])
-//      const markers = useMemo(() => createMarkers(coordinates), [coordinates]);
-
-//     const geojson = {
-//         type: 'FeatureCollection',
-//         features: lines
-//     };
-
-//     const geojsonMarkers = {
-//         type: 'FeatureCollection',
-//         features: markers
-//     };
-
-// //     console.log(geojson)
-
-//      // const geojson = {
-//      //      type: 'FeatureCollection',
-//      //      features: [
-//      //           {
-//      //                type: 'Feature', 
-//      //                geometry: {
-//      //                     type: 'Point', 
-//      //                     coordinates: [-122.4, 37.8]
-//      //                }}
-//      //      ]
-//      // };
-//      const lineLayerStyle = {
-//         id: 'curved-lines',
-//         type: 'line',
-//         paint: {
-//             'line-color': ['get', 'color'],
-//             'line-width': 2
-//         }
-//     };
-
-//     const markerLayerStyle = {
-//         id: 'markers',
-//         type: 'circle',
-//         paint: {
-//             'circle-radius': 5,
-//             'circle-color': ['get', 'color']
-//         }
-//     };
-
-//      return (
-//           <Map
-//                id="playgroundMap"
-//                initialViewState={{
-//                     latitude: 37.5,//-1.2448863,
-//                     longitude: -110.3,//118.3804682,
-//                     zoom: 1.5
-//                }}
-//                height='600px'
-//                mapStyle={'mapbox://styles/mapbox/dark-v11'}
-//                projection={'globe'}
-//                terrain={{
-//                     source: "raster-dem",
-//                     exaggeration: 1.5,
-//                }}
-//                fog={{
-//                     color: 'rgb(220, 159, 159)', // Pink fog / lower atmosphere
-//                     'high-color': 'rgb(36, 92, 223)', // Blue sky / upper atmosphere
-//                     'horizon-blend': 0.04 // Exaggerate atmosphere (default is .1)
-//                }}
-//                fullscreen={true}
-//           >
-//                <Source id="curved-lines" type="geojson" data={geojson}>
-//                     <Layer {...lineLayerStyle} />
-//                </Source>
-//                <Source id="markers" type="geojson" data={geojsonMarkers}>
-//                     <Layer {...markerLayerStyle} />
-//                </Source>
-//           </Map>
-//      )
-// }
-
-
 'use client'
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Source, Layer, useMap } from "react-map-gl";
 import Map from "@/components/custom/MapBox";
-import { point } from '@turf/helpers';
+import * as turf from '@turf/turf'
 
 // Fungsi untuk membuat titik-titik pada garis melengkung menggunakan interpolasi Bezier
-const createBezierCurve = (start, end, color) => {
+const createBezierCurve = (start, end) => {
     const numberOfPoints = 100; // Jumlah titik pada garis melengkung
     const curvePoints = [];
     const controlPoint = [
@@ -208,123 +27,110 @@ const createBezierCurve = (start, end, color) => {
         curvePoints.push([x, y]);
     }
 
-    return {
-        type: "Feature",
-        geometry: {
-            type: "LineString",
-            coordinates: curvePoints,
-        },
-        properties: {
-            color: color
-        }
-    };
-
-     return curvePoints; 
+    return curvePoints;
 };
 
 export default function MapBoxComponents({ coordinates }) {
-     const { current: playgroundMap } = useMap('playgroundMap');
-     const [centerMap, setCenterMap] = useState([106.8165941, -6.268303]);
+    const { current: mapBox } = useMap("playgroundMap");
+    const [animatedLine, setAnimatedLine] = useState({});
 
-     // const [progress, setProgress] = useState(0);
+    useEffect(() => {
+        if (!coordinates.length) return;
 
-//     const createCurvedLines = (data) => {
-//         return data.map((v, i) => {
-//             const start = [v.source_lon, v.source_lat];
-//             const end = [v.destination_lon, v.destination_lat];
-//             return {
-//                 coordinates: createBezierCurve(start, end),
-//                 color: v.color
-//             };
-//         });
-//     };
+        // console.log(datas, '::datas')
 
-//      useEffect(() => {
-//         const animate = () => {
-//             setProgress((prev) => (prev + 0.1) % 1);
-//             requestAnimationFrame(animate);
-//         };
-
-//         requestAnimationFrame(animate);
-//     }, []);
-
-    const createCurvedLines = (data) => {
-        return data.map((v, i) => {
+        coordinates.forEach((v, index) => {
             const start = [v.source_lon, v.source_lat];
             const end = [v.destination_lon, v.destination_lat];
-            return createBezierCurve(start, end, v.color);
+            const bezierCurve = createBezierCurve(start, end);
+
+            // Mulai animasi
+            animateLine(bezierCurve, v.color, index);
         });
-    };
+    }, [coordinates]);
 
-    const createMarkers = (data) => {
-        return data.reduce((acc, v) => {
-            acc.push({
-                type: "Feature",
-                geometry: {
-                    type: "Point",
-                    coordinates: [v.source_lon, v.source_lat]
-                },
-                properties: {
-                    color: v.color
-                }
-            });
-            acc.push({
-                type: "Feature",
-                geometry: {
-                    type: "Point",
-                    coordinates: [v.destination_lon, v.destination_lat]
-                },
-                properties: {
-                    color: v.color
-                }
-            });
-            return acc;
-        }, []);
-    };
+   const animateLine = (curvePoints, color, index) => {
+    let currentIndex = 0; // Indeks saat ini pada array koordinat
+    const segmentLength = 20; // Panjang garis yang ditampilkan dalam animasi
 
-    const lines = useMemo(() => createCurvedLines(coordinates), [coordinates]);
-    const markers = useMemo(() => createMarkers(coordinates), [coordinates]);
+    function frame() {
+        if (currentIndex < curvePoints.length) {
+            // Hitung segmen yang akan ditampilkan
+            const start = Math.max(0, currentIndex - segmentLength);
+            const segment = curvePoints.slice(start, currentIndex + 1);
+
+            // Set state dengan garis animasi baru
+            setAnimatedLine((prev) => ({
+                ...prev,
+                [index]: {
+                    type: "Feature",
+                    geometry: {
+                        type: "LineString",
+                        coordinates: segment,
+                    },
+                    properties: { color },
+                },
+            }));
+
+            currentIndex++; // Pindah ke titik berikutnya
+            requestAnimationFrame(frame); // Lanjutkan animasi
+        } else {
+            // Reset animasi setelah selesai
+            setTimeout(() => {
+                currentIndex = 0; // Kembali ke awal
+                frame();
+            }, 500); // Tambahkan jeda sebelum memulai ulang
+        }
+    }
+
+    frame(); // Mulai animasi
+};
+
 
     const geojsonLines = {
-        type: 'FeatureCollection',
-        features: lines
+        type: "FeatureCollection",
+        features: Object.values(animatedLine),
     };
 
-//      const geojsonLines = {
-//         type: 'FeatureCollection',
-//         features: lines.map(line => ({
-//             type: "Feature",
-//             geometry: {
-//                 type: "LineString",
-//                 coordinates: line.coordinates.slice(0, Math.floor(progress * line.coordinates.length) + 1)
-//             },
-//             properties: {
-//                 color: line.color
-//             }
-//         }))
-//     };
-
     const geojsonMarkers = {
-        type: 'FeatureCollection',
-        features: markers
+        type: "FeatureCollection",
+        features: coordinates.reduce((acc, v) => {
+            acc.push({
+                type: "Feature",
+                geometry: {
+                    type: "Point",
+                    coordinates: [v.source_lon, v.source_lat],
+                },
+                properties: { color: v.color },
+            });
+            acc.push({
+                type: "Feature",
+                geometry: {
+                    type: "Point",
+                    coordinates: [v.destination_lon, v.destination_lat],
+                },
+                properties: { color: v.color },
+            });
+            return acc;
+        }, []),
     };
 
     const lineLayerStyle = {
-        id: 'curved-lines',
-        type: 'line',
+        id: "curved-lines",
+        type: "line",
         paint: {
-            'line-color': ['get', 'color'],
-            'line-width': 2
-        }
+            "line-color": ["get", "color"],
+            "line-width": 2,
+        },
     };
 
     const markerLayerStyle = {
-        id: 'markers',
-        type: 'circle',
+        id: "markers",
+        type: "circle",
         paint: {
-            'circle-radius': 5,
-            'circle-color': ['get', 'color']
-        }
+            "circle-radius": 5,
+            "circle-color": ["get", "color"],
+        },
     };
 
     return (
@@ -333,28 +139,29 @@ export default function MapBoxComponents({ coordinates }) {
             initialViewState={{
                 latitude: 0,
                 longitude: 0,
-                zoom: 1.5
+                zoom: 1.5,
             }}
-            height='600px'
-            mapStyle='mapbox://styles/mapbox/streets-v11'
-            projection='globe'
+            height="100vh"
+            mapStyle="mapbox://styles/mapbox/streets-v11"
+            projection="globe"
             terrain={{
                 source: "raster-dem",
                 exaggeration: 1.5,
             }}
             fog={{
-                color: 'rgb(220, 159, 159)', // Pink fog / lower atmosphere
-                'high-color': 'rgb(36, 92, 223)', // Blue sky / upper atmosphere
-                'horizon-blend': 0.04 // Exaggerate atmosphere (default is .1)
+                color: "rgb(220, 159, 159)", // Pink fog / lower atmosphere
+                "high-color": "rgb(36, 92, 223)", // Blue sky / upper atmosphere
+                "horizon-blend": 0.04, // Exaggerate atmosphere (default is .1)
             }}
             fullscreen={true}
         >
-            {/* <Source id="curved-lines" type="geojson" data={geojsonLines}>
-                <Layer {...lineLayerStyle} />
-            </Source> */}
             <Source id="markers" type="geojson" data={geojsonMarkers}>
                 <Layer {...markerLayerStyle} />
+            </Source>
+            <Source id="curved-lines" type="geojson" data={geojsonLines}>
+                <Layer {...lineLayerStyle} />
             </Source>
         </Map>
     );
 }
+
